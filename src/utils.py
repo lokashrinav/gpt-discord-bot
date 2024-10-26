@@ -47,14 +47,17 @@ def is_last_message_stale(
 
 
 async def close_thread(thread: discord.Thread):
-    await thread.edit(name=INACTIVATE_THREAD_PREFIX)
+    await thread.edit(
+        name=INACTIVATE_THREAD_PREFIX,
+        archived=True,
+        locked=True
+    )
     await thread.send(
         embed=discord.Embed(
             description="**Thread closed** - Context limit reached, closing...",
             color=discord.Color.blue(),
         )
     )
-    await thread.edit(archived=True, locked=True)
 
 
 def should_block(guild: Optional[discord.Guild]) -> bool:
